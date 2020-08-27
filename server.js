@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const users = require("./routes/api/users");
 const posts = require("./routes/api/posts");
 const profile = require("./routes/api/profile");
+
 const passport = require("passport");
 const bodyParser = require("body-parser");
 
@@ -39,6 +40,6 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 app.use("/api/profile", profile);
 app.use("/api/posts", posts);
-
+// Setting up server
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server started on port: ${port}`));

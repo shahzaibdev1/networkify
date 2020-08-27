@@ -1,52 +1,72 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import clsx from "clsx";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import HomeIcon from "@material-ui/icons/Home";
+import Drawer from "@material-ui/core/Drawer";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import List from "@material-ui/core/List";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 
-class Navbar extends Component {
-  render() {
-    return (
-      <>
-        <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
-          <div className="container">
-            <Link className="navbar-brand" to="/">
-              DevConnector
-            </Link>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#mobile-nav"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
+import PostAddIcon from "@material-ui/icons/PostAdd";
+import PersonIcon from "@material-ui/icons/Person";
+import { pink, grey } from "@material-ui/core/colors";
+import { useStyles } from "../styles/navbarStyle";
 
-            <div className="collapse navbar-collapse" id="mobile-nav">
-              <ul className="navbar-nav mr-auto">
-                <li className="nav-item">
-                  <a className="nav-link" to="/profiles">
-                    {" "}
-                    Developers
-                  </a>
-                </li>
-              </ul>
+export default function MiniDrawer(props) {
+  const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
 
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <Link className="nav-link" to="/register">
-                    Sign Up
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/login">
-                    Login
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </>
-    );
-  }
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        variant="elevation"
+        elevation={20}
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            // onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, {
+              [classes.hide]: open,
+            })}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap>
+            Connectify App
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        {props.children}
+      </main>
+    </div>
+  );
 }
-
-export default Navbar;

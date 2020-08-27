@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import Axios from "axios";
+import Typography from "@material-ui/core/Typography";
+import { Grid, TextField, withStyles, Button } from "@material-ui/core";
+import { registerStyles } from "../styles/registerStyle";
 
 class Register extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      searchNodes: "",
       name: "",
       email: "",
       password: "",
@@ -34,114 +38,127 @@ class Register extends Component {
       confirmPassword: this.state.confirmPassword,
     };
 
-    Axios.post(`http://127.0.0.1:5000/api/users/register`, newUser)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => this.setState({ errors: err.response.data }));
+    // this.props.registerUser(newUser);
+
+    Axios.post("/api/users/register", newUser).catch((err) =>
+      this.setState({ errors: err.response.data })
+    );
   };
 
   render() {
-    let { errors } = this.state;
+    const { classes } = this.props;
+    const { errors } = this.state;
+
+    // let { user } = this.props.auth;
 
     return (
-      <div>
+      <div className={classes.root}>
         <div className="register">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-8 m-auto">
-                <h1 className="display-4 text-center">Sign Up</h1>
-                <p className="lead text-center">
-                  Create your DevConnector account
-                </p>
-                <form noValidate onSubmit={this.handleSubmit}>
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      className={`form-control form-control-lg ${
-                        errors.name ? "is-invalid" : ""
-                      }`}
-                      placeholder="Name"
-                      name="name"
-                      value={this.state.name}
-                      onChange={this.handleChange}
-                      required
-                    />
-                    {errors.name ? (
-                      <div className="invalid-feedback">{errors.name}</div>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="email"
-                      className={`form-control form-control-lg ${
-                        errors.name ? "is-invalid" : ""
-                      }`}
-                      placeholder="Email Address"
-                      name="email"
-                      onChange={this.handleChange}
-                      value={this.state.email}
-                    />
-                    {errors.email ? (
-                      <div className="invalid-feedback">{errors.email}</div>
-                    ) : (
-                      ""
-                    )}
-                    <small className="form-text text-muted">
-                      This site uses Gravatar so if you want a profile image,
-                      use a Gravatar email
-                    </small>
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="password"
-                      className={`form-control form-control-lg ${
-                        errors.name ? "is-invalid" : ""
-                      }`}
-                      placeholder="Password"
-                      name="password"
-                      onChange={this.handleChange}
-                      value={this.state.password}
-                    />
-                    {errors.password ? (
-                      <div className="invalid-feedback">{errors.password}</div>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="password"
-                      className={`form-control form-control-lg ${
-                        errors.name ? "is-invalid" : ""
-                      }`}
-                      placeholder="Confirm Password"
-                      name="confirmPassword"
-                      onChange={this.handleChange}
-                      value={this.state.confirmPassword}
-                    />
-                    {errors.confirmPassword ? (
-                      <div className="invalid-feedback">
-                        {errors.confirmPassword}
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                  <input
-                    type="submit"
-                    className="btn btn-info btn-block mt-4"
+          <Grid container direction="row" justify="center" alignItems="center">
+            <div className="col-md-8 m-auto">
+              <Typography
+                variant="h1"
+                className={classes.textShadow}
+                style={{ color: "white" }}
+              >
+                Register
+              </Typography>
+              <Typography variant="h5" style={{ color: "white" }}>
+                Create your Connectify account
+              </Typography>
+              <form noValidate autoComplete="off">
+                <Grid
+                  container
+                  direction="column"
+                  justify="space-evenly"
+                  alignItems="stretch"
+                >
+                  <TextField
+                    label="Name"
+                    className={classes.inputField}
+                    InputProps={{ className: classes.input }}
+                    InputLabelProps={{ className: classes.inputLabel }}
+                    error={errors.name ? true : false}
+                    variant="outlined"
+                    name="name"
+                    value={this.state.name}
+                    onChange={this.handleChange}
                   />
-                </form>
-              </div>
+
+                  {errors.name ? <Typography>{errors.name}</Typography> : ""}
+
+                  <TextField
+                    label="email"
+                    variant="outlined"
+                    name="email"
+                    className={classes.inputField}
+                    error={errors.email ? true : false}
+                    InputLabelProps={{ className: classes.inputLabel }}
+                    InputProps={{ className: classes.input }}
+                    onChange={this.handleChange}
+                    value={this.state.email}
+                  />
+                  {errors.email ? (
+                    <div className="invalid-feedback">{errors.email}</div>
+                  ) : (
+                    ""
+                  )}
+
+                  <TextField
+                    type="password"
+                    error={errors.password ? true : false}
+                    label="Password"
+                    className={classes.inputField}
+                    variant="outlined"
+                    InputLabelProps={{ className: classes.inputLabel }}
+                    InputProps={{ className: classes.input }}
+                    name="password"
+                    onChange={this.handleChange}
+                    value={this.state.password}
+                  />
+                  {errors.password ? (
+                    <div className="invalid-feedback">{errors.password}</div>
+                  ) : (
+                    ""
+                  )}
+
+                  <TextField
+                    type="password"
+                    error={errors.confirmPassword ? true : false}
+                    className={classes.inputField}
+                    variant="outlined"
+                    label="Confirm Password"
+                    InputLabelProps={{ className: classes.inputLabel }}
+                    InputProps={{ className: classes.input }}
+                    name="confirmPassword"
+                    onChange={this.handleChange}
+                    value={this.state.confirmPassword}
+                  />
+
+                  {errors.confirmPassword ? (
+                    <div className="invalid-feedback">
+                      {errors.confirmPassword}
+                    </div>
+                  ) : (
+                    ""
+                  )}
+
+                  <Button
+                    className={classes.inputField}
+                    onclick={this.handleSubmit}
+                    color="secondary"
+                    variant="contained"
+                  >
+                    Submit
+                  </Button>
+                </Grid>
+              </form>
             </div>
-          </div>
+          </Grid>
         </div>
       </div>
     );
   }
 }
 
-export default Register;
+export default withStyles(registerStyles)(Register);

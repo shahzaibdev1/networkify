@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import Axios from "axios";
+import Typography from "@material-ui/core/Typography";
+import { Grid, TextField, withStyles, Button } from "@material-ui/core";
+import { loginStyles } from "../styles/loginStyles";
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      searchNodes: "",
       email: "",
       password: "",
       errors: {},
@@ -24,59 +28,112 @@ export default class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    let loggedInUser = {
+    let user = {
       email: this.state.email,
       password: this.state.password,
     };
 
-    Axios.post("http://127.0.0.1:5000/api/users/login", {
-      email: loggedInUser.email,
-      password: loggedInUser.password,
-    });
+    Axios.post("/api/users/login", user).catch((err) =>
+      this.setState({ errors: err.response.data })
+    );
   };
 
   render() {
+    const { classes } = this.props;
+    const { errors } = this.state;
+
     return (
       <div>
         <div className="login">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-8 m-auto">
-                <h1 className="display-4 text-center">Log In</h1>
-                <p className="lead text-center">
-                  Sign in to your DevConnector account
-                </p>
-                <form onSubmit={this.handleSubmit}>
-                  <div className="form-group">
-                    <input
-                      type="email"
-                      className="form-control form-control-lg"
-                      placeholder="Email Address"
-                      value={this.state.email}
-                      onChange={this.handleChange}
-                      name="email"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="password"
-                      className="form-control form-control-lg"
-                      placeholder="Password"
-                      value={this.state.password}
-                      onChange={this.handleChange}
-                      name="password"
-                    />
-                  </div>
-                  <input
-                    type="submit"
-                    className="btn btn-info btn-block mt-4"
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <div>
+              <Typography
+                variant="h1"
+                className={[
+                  classes.textLight,
+                  classes.textShadow,
+                  classes.textCenter,
+                ]}
+              >
+                Login
+              </Typography>
+              <Typography
+                variant="h5"
+                className={[classes.textLight, classes.textCenter]}
+              >
+                Login with Connectify account
+              </Typography>
+              <form noValidate autoComplete="off">
+                <Grid
+                  container
+                  direction="column"
+                  justify="space-evenly"
+                  alignItems="stretch"
+                >
+                  <TextField
+                    label="email"
+                    variant="outlined"
+                    name="email"
+                    className={classes.inputField}
+                    error={errors.email ? true : false}
+                    InputLabelProps={{ className: classes.inputLabel }}
+                    InputProps={{ className: classes.input }}
+                    onChange={this.handleChange}
+                    value={this.state.email}
                   />
-                </form>
-              </div>
+
+                  {errors.email ? (
+                    <Typography className={classes.textDanger}>
+                      {errors.email}
+                    </Typography>
+                  ) : (
+                    ""
+                  )}
+
+                  <TextField
+                    type="password"
+                    error={errors.password ? true : false}
+                    label="Password"
+                    className={classes.inputField}
+                    variant="outlined"
+                    InputLabelProps={{ className: classes.inputLabel }}
+                    InputProps={{ className: classes.input }}
+                    name="password"
+                    onChange={this.handleChange}
+                    value={this.state.password}
+                  />
+
+                  {errors.password ? (
+                    <Typography
+                      className={`invalid-feedback ${classes.textDanger}`}
+                    >
+                      {errors.password}
+                    </Typography>
+                  ) : (
+                    ""
+                  )}
+
+                  <Button
+                    className={classes.inputField}
+                    color="secondary"
+                    variant="contained"
+                    onClick={this.handleSubmit}
+                  >
+                    Submit
+                  </Button>
+                </Grid>
+              </form>
             </div>
-          </div>
+          </Grid>
         </div>
       </div>
     );
   }
 }
+
+export default withStyles(loginStyles)(Login);
