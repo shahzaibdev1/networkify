@@ -8,7 +8,7 @@ export default function Footer() {
 
   return (
     <div className={classes.root}>
-      <Paper elevation={5}>
+      <Paper elevation={5} square>
         <Grid container direction="row" justify="center" alignItems="flex-end">
           <Typography className={classes.typography}>
             Copyright &copy; {new Date().getFullYear()} Connectify
