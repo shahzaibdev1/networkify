@@ -37,4 +37,8 @@ export const loginStyles = (theme) => ({
   textCenter: {
     textAlign: "center",
   },
+
+  inputBtn: {
+    backgroundColor: pink[400],
+  },
 });
