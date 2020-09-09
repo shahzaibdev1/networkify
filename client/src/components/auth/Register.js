@@ -85,7 +85,13 @@ class Register extends Component {
                     onChange={this.handleChange}
                   />
 
-                  {errors.name ? <Typography>{errors.name}</Typography> : ""}
+                  {errors.name ? (
+                    <Typography variant="body2" className={classes.inputLabel}>
+                      {errors.name}
+                    </Typography>
+                  ) : (
+                    ""
+                  )}
 
                   <TextField
                     label="email"
@@ -99,7 +105,9 @@ class Register extends Component {
                     value={this.state.email}
                   />
                   {errors.email ? (
-                    <div className="invalid-feedback">{errors.email}</div>
+                    <Typography variant="body2" className={classes.inputLabel}>
+                      {errors.email}
+                    </Typography>
                   ) : (
                     ""
                   )}
@@ -117,7 +125,9 @@ class Register extends Component {
                     value={this.state.password}
                   />
                   {errors.password ? (
-                    <div className="invalid-feedback">{errors.password}</div>
+                    <Typography variant="body2" className={classes.inputLabel}>
+                      {errors.password}
+                    </Typography>
                   ) : (
                     ""
                   )}
@@ -136,16 +146,16 @@ class Register extends Component {
                   />
 
                   {errors.confirmPassword ? (
-                    <div className="invalid-feedback">
+                    <Typography variant="body2" className={classes.inputLabel}>
                       {errors.confirmPassword}
-                    </div>
+                    </Typography>
                   ) : (
                     ""
                   )}
 
                   <Button
                     className={classes.inputField}
-                    onclick={this.handleSubmit}
+                    onClick={this.handleSubmit}
                     color="secondary"
                     variant="contained"
                   >
