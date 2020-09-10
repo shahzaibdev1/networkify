@@ -3,6 +3,7 @@ import Axios from "axios";
 import Typography from "@material-ui/core/Typography";
 import { Grid, TextField, withStyles, Button } from "@material-ui/core";
 import { registerStyles } from "../styles/registerStyle";
+import { MyProvider, MyContext } from "../../Provider/MyProvider";
 
 class Register extends Component {
   constructor(props) {

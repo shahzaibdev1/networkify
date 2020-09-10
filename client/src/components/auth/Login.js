@@ -119,8 +119,7 @@ class Login extends Component {
                   )}
 
                   <Button
-                    className={classes.inputField}
-                    color="secondary"
+                    className={[classes.inputField, classes.inputBtn]}
                     variant="contained"
                     onClick={this.handleSubmit}
                   >

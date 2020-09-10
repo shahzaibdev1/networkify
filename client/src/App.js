@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+
+import { MyProvider, MyContext } from "../src/Provider/MyProvider";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import "fontsource-roboto";
@@ -17,14 +19,16 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Navbar>
-            <Route path="/" exact component={Landing} />
-            <div className="container">
-              <Route path="/login" exact component={Login} />
-              <Route path="/register" exact component={Register} />
-            </div>
+          <MyProvider>
+            <Navbar>
+              <Route path="/" exact component={Landing} />
+              <div className="container">
+                <Route path="/login" exact component={Login} />
+                <Route path="/register" exact component={Register} />
+              </div>
+            </Navbar>
             <Footer />
-          </Navbar>
+          </MyProvider>
         </div>
       </Router>
     );
