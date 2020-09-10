@@ -26,8 +26,8 @@ class App extends Component {
                 <Route path="/login" exact component={Login} />
                 <Route path="/register" exact component={Register} />
               </div>
+              <Footer />
             </Navbar>
-            <Footer />
           </MyProvider>
         </div>
       </Router>
